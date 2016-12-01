@@ -6,11 +6,10 @@
         {
             switch (day)
             {
+                case 1: return new Day1.Solution();
                 default:
                     throw new System.NotImplementedException();
             }
         }
-
-
     }
 }
