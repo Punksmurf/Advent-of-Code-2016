@@ -32,6 +32,16 @@ namespace AoC2016
 
             try
             {
+                var example = await solution.SolveExampleAsync();
+                Console.WriteLine($"Example solution dor day {day}: {example}");
+            }
+            catch (NotImplementedException)
+            {
+                Console.WriteLine($"Example solution for day {day} not implemented");
+            }
+
+            try
+            {
                 var silver = await solution.SolveSilverAsync(content);
                 Console.WriteLine($"Silver solution for day {day}: {silver}");
             }

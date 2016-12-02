@@ -6,6 +6,11 @@ namespace AoC2016.Solutions.Day1
 {
     public class Solution : ISolution
     {
+        public async Task<string> SolveExampleAsync()
+        {
+            return await SolveSilverAsync("R2, L3");
+        }
+
         public async Task<string> SolveSilverAsync(string input)
         {
             return await Task.Run(() => SolveSilver(input));
