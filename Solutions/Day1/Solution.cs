@@ -6,11 +6,6 @@ namespace AoC2016.Solutions.Day1
 {
     public class Solution : ISolution
     {
-        public int GetDay()
-        {
-            return 1;
-        }
-
         public async Task<string> SolveSilverAsync(string input)
         {
             return await Task.Run(() => SolveSilver(input));
