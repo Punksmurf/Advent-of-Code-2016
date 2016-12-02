@@ -7,6 +7,7 @@
             switch (day)
             {
                 case 1: return new Day1.Solution();
+                case 2: return new Day2.Solution();
                 default:
                     throw new System.NotImplementedException();
             }
