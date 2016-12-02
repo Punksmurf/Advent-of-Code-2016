@@ -17,6 +17,8 @@ namespace AoC2016.Solutions.Day1
             North, East, South, West
         }
 
+
+
         private readonly IList<Instruction> _instructions;
 
         private Location _location;
@@ -95,34 +97,25 @@ namespace AoC2016.Solutions.Day1
 
         private static Direction Turn(Direction currentDirection, Instruction instruction)
         {
+            var ord = (int) currentDirection;
             switch (instruction)
             {
                 case Instruction.Left:
-                    switch (currentDirection)
-                    {
-                        case Direction.North: return Direction.East;
-                        case Direction.East: return Direction.South;
-                        case Direction.South: return Direction.West;
-                        case Direction.West: return Direction.North;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(currentDirection), currentDirection, null);
-                    }
+                    ord--;
+                    break;
                 case Instruction.Right:
-
-                    switch (currentDirection)
-                    {
-                        case Direction.North: return Direction.West;
-                        case Direction.East: return Direction.North;
-                        case Direction.South: return Direction.East;
-                        case Direction.West: return Direction.South;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(currentDirection), currentDirection, null);
-                    }
+                    ord++;
+                    break;
                 case Instruction.Forward:
-                    return currentDirection;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(instruction), instruction, null);
             }
+
+            var numDirections = Enum.GetValues(typeof(Direction)).Length;
+            if (ord < 0) ord += numDirections;
+            ord %= numDirections;
+            return (Direction) ord;
         }
     }
 }
