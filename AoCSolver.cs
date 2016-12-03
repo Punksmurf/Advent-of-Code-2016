@@ -30,35 +30,40 @@ namespace AoC2016
 
             var content = await _dataService.GetAsync(day);
 
+            Task<string> example;
+            Task<string> silver;
+            Task<string> gold;
+
             try
             {
-                var example = await solution.SolveExampleAsync();
-                Console.WriteLine($"Example solution dor day {day}: {example}");
+                example = solution.SolveExampleAsync();
             }
             catch (NotImplementedException)
             {
-                Console.WriteLine($"Example solution for day {day} not implemented");
+                example = Task.FromResult("Not implemented");
             }
 
             try
             {
-                var silver = await solution.SolveSilverAsync(content);
-                Console.WriteLine($"Silver solution for day {day}: {silver}");
+                silver = solution.SolveSilverAsync(content);
             }
             catch (NotImplementedException)
             {
-                Console.WriteLine($"Silver solution for day {day} not implemented");
+                silver = Task.FromResult("Not implemented");
             }
 
             try
             {
-                var gold = await solution.SolveGoldAsync(content);
-                Console.WriteLine($"Gold solution for day {day}: {gold}");
+                gold = solution.SolveGoldAsync(content);
             }
             catch (NotImplementedException)
             {
-                Console.WriteLine($"Gold solution for day {day} not implemented");
+                gold = Task.FromResult("Not implemented");
             }
+
+            Console.WriteLine($"Example solution for day {day}: {await example}");
+            Console.WriteLine($"Silver solution for day {day}: {await silver}");
+            Console.WriteLine($"Gold solution for day {day}: {await gold}");
         }
     }
 }
