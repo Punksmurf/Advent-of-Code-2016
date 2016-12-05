@@ -45,7 +45,9 @@ namespace AoC2016.Service
                     throw new IOException(response.ReasonPhrase);
                 }
                 var content = await response.Content.ReadAsStringAsync();
-                return content;
+
+                // Web content always contains an extra newline at the end
+                return content.TrimEnd('\n');
             }
         }
     }

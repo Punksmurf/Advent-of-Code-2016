@@ -14,14 +14,12 @@ namespace AoC2016.Solutions.Day2
 
         public async Task<string> SolveSilverAsync(string input)
         {
-            // The input has an extre newline at the end which we need to strip
-            return await Task.Run(() => SolveSilver(input.Substring(0, input.Length - 1)));
+            return await Task.Run(() => SolveSilver(input));
         }
 
         public async Task<string> SolveGoldAsync(string input)
         {
-            // The input has an extre newline at the end which we need to strip
-            return await Task.Run(() => SolveGold(input.Substring(0, input.Length - 1)));
+            return await Task.Run(() => SolveGold(input));
         }
 
         private static string SolveSilver(string input)
