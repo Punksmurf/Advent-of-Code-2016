@@ -34,7 +34,7 @@ totally-real-room-200[decoy]";
             var validRooms = allRooms.Where(_ => _.IsValid()).ToList();
             var sectorSum = validRooms.Sum(_ => _.Sector);
 
-            DumpAllRooms(allRooms);
+            // DumpAllRooms(allRooms);
 
             return $"There are {allRooms.Count} rooms on the list, but only {validRooms.Count} are valid. The sum of the sector ids is {sectorSum}";
         }
