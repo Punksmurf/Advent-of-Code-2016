@@ -14,6 +14,7 @@
                 case 6: return new Day6.Solution();
                 case 7: return new Day7.Solution();
                 case 8: return new Day8.Solution();
+                case 9: return new Day9.Solution();
                 default:
                     throw new System.NotImplementedException();
             }
