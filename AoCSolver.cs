@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using AoC2016.Service;
 using AoC2016.Solutions;
@@ -34,8 +35,14 @@ namespace AoC2016
             Task<string> silver;
             Task<string> gold;
 
+            var exampleSw = new Stopwatch();
+            var silverSw = new Stopwatch();
+            var goldSw = new Stopwatch();
+
+
             try
             {
+                exampleSw.Start();
                 example = solution.SolveExampleAsync();
             }
             catch (NotImplementedException)
@@ -45,6 +52,7 @@ namespace AoC2016
 
             try
             {
+                silverSw.Start();
                 silver = solution.SolveSilverAsync(content);
             }
             catch (NotImplementedException)
@@ -54,6 +62,7 @@ namespace AoC2016
 
             try
             {
+                goldSw.Start();
                 gold = solution.SolveGoldAsync(content);
             }
             catch (NotImplementedException)
@@ -61,9 +70,9 @@ namespace AoC2016
                 gold = Task.FromResult("Not implemented");
             }
 
-            Console.WriteLine($"Example solution for day {day}: {await example}");
-            Console.WriteLine($"Silver solution for day {day}: {await silver}");
-            Console.WriteLine($"Gold solution for day {day}: {await gold}");
+            Console.WriteLine($"Example solution for day {day}: {await example} ({exampleSw.ElapsedMilliseconds}ms)");
+            Console.WriteLine($"Silver solution for day {day}: {await silver} ({silverSw.ElapsedMilliseconds}ms)");
+            Console.WriteLine($"Gold solution for day {day}: {await gold} ({goldSw.ElapsedMilliseconds}ms)");
         }
     }
 }
