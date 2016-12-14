@@ -6,15 +6,15 @@
         {
             switch (day)
             {
-                case 1: return new Day1.Solution();
-                case 2: return new Day2.Solution();
-                case 3: return new Day3.Solution();
-                case 4: return new Day4.Solution();
-                case 5: return new Day5.Solution();
-                case 6: return new Day6.Solution();
-                case 7: return new Day7.Solution();
-                case 8: return new Day8.Solution();
-                case 9: return new Day9.Solution();
+                case 1: return new Day01.Solution();
+                case 2: return new Day02.Solution();
+                case 3: return new Day03.Solution();
+                case 4: return new Day04.Solution();
+                case 5: return new Day05.Solution();
+                case 6: return new Day06.Solution();
+                case 7: return new Day07.Solution();
+                case 8: return new Day08.Solution();
+                case 9: return new Day09.Solution();
                 case 10: return new Day10.Solution();
                 case 11: return new Day11.Solution();
                 case 12: return new Day12.Solution();
