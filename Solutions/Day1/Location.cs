@@ -1,9 +1,11 @@
-﻿namespace AoC2016.Solutions.Day1
+﻿using System;
+
+namespace AoC2016.Solutions.Day1
 {
-    public class Location
+    public class Location : IEquatable<Location>
     {
-        public int X;
-        public int Y;
+        public int X { get; }
+        public int Y { get; }
 
         public Location(int x, int y)
         {
@@ -11,12 +13,7 @@
             Y = y;
         }
 
-        public Location Clone()
-        {
-            return new Location(X, Y);
-        }
-
-        protected bool Equals(Location other)
+        public bool Equals(Location other)
         {
             return X == other.X && Y == other.Y;
         }
@@ -37,4 +34,6 @@
             }
         }
     }
+
+
 }

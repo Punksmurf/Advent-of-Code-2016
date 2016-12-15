@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using AoC2016.Solutions.Day11.State;
 
 namespace AoC2016.Solutions.Day1
 {
@@ -14,49 +16,17 @@ namespace AoC2016.Solutions.Day1
 
         private enum Direction
         {
-            North, East, South, West
+            North = 0, East = 1, South = 2, West = 3
         }
 
-
-
-        private readonly IList<Instruction> _instructions;
-
-        private Location _location;
-        private Direction _direction;
-        private int _instructionIndex;
+        private readonly IEnumerable<Instruction> _instructions;
 
         public CityWalker(string document)
         {
             _instructions = ParseDocument(document);
-            Reset();
         }
 
-        public void Reset()
-        {
-            _location = new Location(0, 0);
-            _direction = Direction.North;
-            _instructionIndex = -1;
-        }
-
-        public bool HasNext()
-        {
-            return _instructionIndex + 1 < _instructions.Count;
-        }
-
-        public Location Next()
-        {
-            if (!HasNext()) throw new IndexOutOfRangeException();
-            _instructionIndex++;
-            ExecuteInstruction(_instructions[_instructionIndex]);
-            return _location.Clone();
-        }
-
-        public Location GetLocation()
-        {
-            return _location.Clone();
-        }
-
-        private static IList<Instruction> ParseDocument(string document)
+        private static IEnumerable<Instruction> ParseDocument(string document)
         {
             return Regex.Split(document, @",\s*").SelectMany(inst =>
             {
@@ -68,30 +38,49 @@ namespace AoC2016.Solutions.Day1
                     instructions[i] = Instruction.Forward;
                 }
                 return instructions;
-            }).ToList();
+            });
         }
 
-        private void ExecuteInstruction(Instruction instruction)
+        public IEnumerable<Location> GetLocations()
         {
-            switch (instruction)
+            var direction = Direction.North;
+            var x = 0;
+            var y = 0;
+
+            foreach (var instruction in _instructions)
             {
-                case Instruction.Left:
-                case Instruction.Right:
-                    _direction = Turn(_direction, instruction);
-                    break;
-                case Instruction.Forward:
-                    switch (_direction)
-                    {
-                        case Direction.North: _location.Y++; break;
-                        case Direction.East: _location.X++; break;
-                        case Direction.South: _location.Y--; break;
-                        case Direction.West: _location.X--; break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+
+                direction = Turn(direction, instruction);
+                switch (instruction)
+                {
+                    case Instruction.Left:
+                    case Instruction.Right:
+                        continue;
+
+                    case Instruction.Forward:
+                        switch (direction)
+                        {
+                            case Direction.North:
+                                y--;
+                                break;
+                            case Direction.East:
+                                x++;
+                                break;
+                            case Direction.South:
+                                y++;
+                                break;
+                            case Direction.West:
+                                x--;
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                yield return new Location(x, y);
             }
         }
 

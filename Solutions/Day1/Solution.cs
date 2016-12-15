@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AoC2016.Solutions.Day1
@@ -24,9 +25,8 @@ namespace AoC2016.Solutions.Day1
         private static string SolveSilver(string input)
         {
             var walker = new CityWalker(input);
-            while (walker.HasNext()) walker.Next();
 
-            var location = walker.GetLocation();
+            var location = walker.GetLocations().Last();
             var distance = Math.Abs(location.X) + Math.Abs(location.Y);
 
             return $"We think Easter Bunny HQ is at {location.X},{location.Y} for a total distance of {distance}";
@@ -36,25 +36,23 @@ namespace AoC2016.Solutions.Day1
         {
             var walker = new CityWalker(input);
 
-            var locationHistory = new List<Location>();
+            var history = new HashSet<Location>();
 
-            while (walker.HasNext())
+            Location found = null;
+            foreach (var location in walker.GetLocations())
             {
-                // When we turn, we stay at the same location but that doesn't count as a double visit to the same spot
-                var currentLocation = walker.GetLocation();
-                while (walker.HasNext() && currentLocation.Equals(walker.Next())) ;
-
-                var location = walker.GetLocation();
-                if (locationHistory.Contains(location))
+                if (history.Contains(location))
                 {
+                    found = location;
                     break;
                 }
-                locationHistory.Add(location);
-            }
-            var finalLocation = walker.GetLocation();
-            var distance = Math.Abs(finalLocation.X) + Math.Abs(finalLocation.Y);
 
-            return $"Easter Bunny HQ is actually at {finalLocation.X},{finalLocation.Y} for a total distance of {distance}";
+                history.Add(location);
+            }
+
+            var distance = found != null ? Math.Abs(found.X) + Math.Abs(found.Y) : 0;
+
+            return $"Easter Bunny HQ is actually at {found?.X},{found?.Y} for a total distance of {distance}";
         }
     }
 }
