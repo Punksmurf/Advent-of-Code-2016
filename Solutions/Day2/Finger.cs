@@ -13,28 +13,22 @@ namespace AoC2016.Solutions.Day2
         }
 
         private readonly KeyPad _keyPad;
-        private readonly IList<Instruction> _instructions;
-        private int _currentInstruction;
-        private char _currentKey;
+        private readonly IEnumerable<Instruction> _instructions;
 
-        public Finger(KeyPad keyPad, string procedure, char startKey)
+        public Finger(KeyPad keyPad, string procedure)
         {
             _keyPad = keyPad;
             _instructions = Memorize(procedure);
-            _currentInstruction = -1;
-            _currentKey = startKey;
         }
 
-        public char PressNextKey()
+        public IEnumerable<char> GetKeyPresses(char startKey)
         {
-            var startingPosition = _keyPad.GetPosition(_currentKey);
+            var startingPosition = _keyPad.GetPosition(startKey);
             var x = startingPosition.Item1;
             var y = startingPosition.Item2;
 
-            while (HasNext())
+            foreach (var instruction in _instructions)
             {
-                var instruction = Next();
-
                 var oldX = x;
                 var oldY = y;
 
@@ -45,43 +39,19 @@ namespace AoC2016.Solutions.Day2
                     case Instruction.MoveLeft: x--; break;
                     case Instruction.MoveRight: x++; break;
                     case Instruction.Press:
-                        _currentKey = _keyPad.GetKey(x, y);
-                        return _currentKey;
+                        yield return _keyPad.GetKey(x, y);
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
 
-                if (!_keyPad.IsValid(x, y))
-                {
-                    x = oldX;
-                    y = oldY;
-                }
+                if (_keyPad.IsValid(x, y)) continue;
+                x = oldX;
+                y = oldY;
             }
-
-            throw new Exception("No Press instruction found at the end of the instructions");
         }
 
-        public bool Finished()
-        {
-            return _currentInstruction == _instructions.Count - 1;
-        }
-
-        private bool HasNext()
-        {
-            return _currentInstruction + 1 < _instructions.Count;
-        }
-
-        private Instruction Next()
-        {
-            if (!HasNext())
-            {
-                throw new IndexOutOfRangeException();
-            }
-            _currentInstruction++;
-            return _instructions[_currentInstruction];
-        }
-
-        private static IList<Instruction> Memorize(string procedure)
+        private static IEnumerable<Instruction> Memorize(string procedure)
         {
             return procedure.Split('\n').SelectMany(line =>
             {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using AoC2016.Solutions.Day1;
+﻿using System.Threading.Tasks;
 
 namespace AoC2016.Solutions.Day2
 {
@@ -43,20 +40,12 @@ namespace AoC2016.Solutions.Day2
             var code = Solve(keyPad, input);
 
             return $"Stupid keypad, but the code is: {code}";
-
         }
 
         private static string Solve(KeyPad keyPad, string secretDocument)
         {
-            var finger = new Finger(keyPad, secretDocument, '5');
-            var code = new StringBuilder();
-
-            while (!finger.Finished())
-            {
-                code.Append(finger.PressNextKey());
-            }
-
-            return code.ToString();
+            var finger = new Finger(keyPad, secretDocument);
+            return string.Concat(finger.GetKeyPresses('5'));
         }
     }
 }
