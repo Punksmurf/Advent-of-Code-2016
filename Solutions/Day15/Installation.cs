@@ -13,9 +13,19 @@ namespace AoC2016.Solutions.Day15
             Discs.Add(disc);
         }
 
-        public bool IsOpenAt(int t)
+        public int Solve()
         {
-            return Discs.All(d => d.IsOpenAt(t));
+            var stepSize = 1;
+            var t = 0;
+            foreach (var disc in Discs.OrderBy(_ => _.Number))
+            {
+                while (!disc.IsOpenAt(t))
+                {
+                    t += stepSize;
+                }
+                stepSize *= disc.Size;
+            }
+            return t;
         }
     }
 }
