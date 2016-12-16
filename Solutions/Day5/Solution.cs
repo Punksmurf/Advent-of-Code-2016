@@ -29,7 +29,7 @@ namespace AoC2016.Solutions.Day5
         {
             var index = 0;
             var password = new StringBuilder();
-            using (var hasher = MD5.Create())
+            using (var hasher = CreateHasher())
             {
                 while (password.Length < 8)
                 {
@@ -49,7 +49,7 @@ namespace AoC2016.Solutions.Day5
 
             // Console.WriteLine($"Passord: {password}");
 
-            using (var hasher = MD5.Create())
+            using (var hasher = CreateHasher())
             {
                 while (password.Contains('_'))
                 {
@@ -62,7 +62,7 @@ namespace AoC2016.Solutions.Day5
                     if (pos < 0 || pos >= password.Length || password[pos] != '_') continue;
 
                     password = new StringBuilder(password) {[pos] = byte4[0]}.ToString();
-                    // Console.WriteLine($"Passord: {password}");
+                    //Console.WriteLine($"Passord: {password}");
                 }
             }
             return password;

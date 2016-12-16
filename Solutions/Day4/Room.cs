@@ -70,7 +70,7 @@ namespace AoC2016.Solutions.Day4
             return (char) ((chr - 97 + amount) % 26 + 97);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             const int nameColumnWidth = 55;
 
