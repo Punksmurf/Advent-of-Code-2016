@@ -1,6 +1,8 @@
-﻿namespace AoC2016.Solutions.Day13
+﻿using System;
+
+namespace AoC2016.Utils
 {
-    public class Coordinate
+    public class Coordinate : IEquatable<Coordinate>
     {
         public int X { get; }
         public int Y { get; }
@@ -11,7 +13,7 @@
             Y = y;
         }
 
-        protected bool Equals(Coordinate other)
+        public bool Equals(Coordinate other)
         {
             return X == other.X && Y == other.Y;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AoC2016.Utils;
 
 namespace AoC2016.Solutions.Day1
 {
@@ -36,9 +37,9 @@ namespace AoC2016.Solutions.Day1
         {
             var walker = new CityWalker(input);
 
-            var history = new HashSet<Location>();
+            var history = new HashSet<Coordinate>();
 
-            Location found = null;
+            Coordinate found = null;
             foreach (var location in walker.GetLocations())
             {
                 if (history.Contains(location))

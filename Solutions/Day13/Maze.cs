@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AoC2016.Utils;
 
 namespace AoC2016.Solutions.Day13
 {

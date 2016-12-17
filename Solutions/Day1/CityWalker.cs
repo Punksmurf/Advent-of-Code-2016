@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using AoC2016.Solutions.Day11.State;
+using AoC2016.Utils;
 
 namespace AoC2016.Solutions.Day1
 {
@@ -41,7 +40,7 @@ namespace AoC2016.Solutions.Day1
             });
         }
 
-        public IEnumerable<Location> GetLocations()
+        public IEnumerable<Coordinate> GetLocations()
         {
             var direction = Direction.North;
             var x = 0;
@@ -80,7 +79,7 @@ namespace AoC2016.Solutions.Day1
                         throw new ArgumentOutOfRangeException();
                 }
 
-                yield return new Location(x, y);
+                yield return new Coordinate(x, y);
             }
         }
 

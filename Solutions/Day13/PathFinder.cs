@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using AoC2016.Utils;
 
 namespace AoC2016.Solutions.Day13
 {
