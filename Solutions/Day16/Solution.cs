@@ -12,9 +12,8 @@ namespace AoC2016.Solutions.Day16
             return Task.Factory.StartNew(() =>
             {
                 const string input = "10000";
-                var inputList = input.ToCharArray().Select(c => c == '1').ToList();
-                inputList = DragonDouble(inputList, 20);
-                var checksum = CreateChecksum(inputList);
+                var dragon = new Dragon(input.ToCharArray().Select(c => c == '1').ToArray());
+                var checksum = CreateChecksum(dragon.GetDragon(20).ToList());
                 return string.Concat(checksum.Select(_ => _ ? '1' : '0'));
             });
         }
@@ -24,8 +23,8 @@ namespace AoC2016.Solutions.Day16
             return Task.Factory.StartNew(() =>
             {
                 var inputList = input.ToCharArray().Select(c => c == '1').ToList();
-                inputList = DragonDouble(inputList, 272);
-                var checksum = CreateChecksum(inputList);
+                var dragon = new Dragon(input.ToCharArray().Select(c => c == '1').ToArray());
+                var checksum = CreateChecksum(dragon.GetDragon(272).ToList());
                 return string.Concat(checksum.Select(_ => _ ? '1' : '0'));
             });
         }
@@ -35,8 +34,8 @@ namespace AoC2016.Solutions.Day16
             return Task.Factory.StartNew(() =>
             {
                 var inputList = input.ToCharArray().Select(c => c == '1').ToList();
-                inputList = DragonDouble(inputList, 35651584);
-                var checksum = CreateChecksum(inputList);
+                var dragon = new Dragon(input.ToCharArray().Select(c => c == '1').ToArray());
+                var checksum = CreateChecksum(dragon.GetDragon(35651584).ToList());
                 return string.Concat(checksum.Select(_ => _ ? '1' : '0'));
             });
         }
@@ -79,8 +78,6 @@ namespace AoC2016.Solutions.Day16
                 yield return a == b;
             }
         }
-
-
 
     }
 }
