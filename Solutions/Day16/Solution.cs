@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace AoC2016.Solutions.Day16
             {
                 const string input = "10000";
                 var dragon = new Dragon(input.ToCharArray().Select(c => c == '1').ToArray());
-                var checksum = CreateChecksum(dragon.GetDragon(20).ToList());
+                var checksum = Checksum(dragon.GetModifiedDragonValue, 20);
                 return string.Concat(checksum.Select(_ => _ ? '1' : '0'));
             });
         }
@@ -22,9 +23,8 @@ namespace AoC2016.Solutions.Day16
         {
             return Task.Factory.StartNew(() =>
             {
-                var inputList = input.ToCharArray().Select(c => c == '1').ToList();
                 var dragon = new Dragon(input.ToCharArray().Select(c => c == '1').ToArray());
-                var checksum = CreateChecksum(dragon.GetDragon(272).ToList());
+                var checksum = Checksum(dragon.GetModifiedDragonValue, 272);
                 return string.Concat(checksum.Select(_ => _ ? '1' : '0'));
             });
         }
@@ -33,49 +33,28 @@ namespace AoC2016.Solutions.Day16
         {
             return Task.Factory.StartNew(() =>
             {
-                var inputList = input.ToCharArray().Select(c => c == '1').ToList();
                 var dragon = new Dragon(input.ToCharArray().Select(c => c == '1').ToArray());
-                var checksum = CreateChecksum(dragon.GetDragon(35651584).ToList());
+                var checksum = Checksum(dragon.GetModifiedDragonValue, 35651584);
                 return string.Concat(checksum.Select(_ => _ ? '1' : '0'));
             });
         }
 
-        private static List<bool> DragonDouble(IReadOnlyList<bool> input, int diskLength)
+        private static IEnumerable<bool> Checksum(Func<int, bool> input, int length)
         {
-            while (input.Count < diskLength)
+            var outLength = length / 2;
+            if (outLength % 2 == 1)
             {
-                input = DragonDouble(input);
+                for (var i = 0; i < outLength; i++)
+                {
+                    yield return input(i * 2) == input(i * 2 + 1);
+                }
             }
-            return input.Take(diskLength).ToList();
-        }
-
-        private static List<bool> DragonDouble(IReadOnlyList<bool> input)
-        {
-            var result = new List<bool>(input) {false};
-            result.AddRange(input.Select(_ => !_).Reverse());
-            return result;
-        }
-
-        private static IEnumerable<bool> CreateChecksum(IReadOnlyList<bool> input)
-        {
-            while (input.Count % 2 == 0)
+            else
             {
-                input = CreatePotentialChecksum(input).ToList();
-            }
-            return input;
-        }
-
-        private static IEnumerable<bool> CreatePotentialChecksum(IReadOnlyList<bool> input)
-        {
-            if (input.Count % 2 != 0)
-            {
-                throw new Exception("Input must have even length");
-            }
-            for (var i = 0; i < input.Count; i += 2)
-            {
-                var a = input[i];
-                var b = input[i + 1];
-                yield return a == b;
+                foreach (var b in Checksum(i => input(i * 2) == input(i * 2 + 1), outLength))
+                {
+                    yield return b;
+                }
             }
         }
 
