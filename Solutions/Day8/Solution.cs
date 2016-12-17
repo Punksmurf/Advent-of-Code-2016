@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AoC2016.Solutions.Day8.Instructions;
@@ -32,7 +31,7 @@ rotate column x=1 by 1";
 
         public Task<string> SolveSilverAsync(string input)
         {
-            var display = new Display(50, 6);
+            var display = new Display(50, 6, true);
 
             var instructions = input.Split('\n').Select(Instruction.Factory.Create);
 
@@ -40,19 +39,31 @@ rotate column x=1 by 1";
             {
                 display.Accept(instruction);
             }
-
-            var result = BuildDisplayOutput(display);
+            display.Show();
             var count = display.CountLitPixels();
 
-            return Task.Run(() => $"This is what the display looks like:\n{result}\nThe number of lit pixels is {count}");
+            return Task.Run(() => $"The number of lit pixels is {count}");
         }
 
         public Task<string> SolveGoldAsync(string input)
         {
-            throw new System.NotImplementedException();
+            return Task.Run(() =>
+            {
+                var display = new Display(50, 6);
+
+                var instructions = input.Split('\n').Select(Instruction.Factory.Create);
+
+                foreach (var instruction in instructions)
+                {
+                    display.Accept(instruction);
+                }
+
+                return '\n' + BuildDisplayOutput(display);
+
+            });
         }
 
-        private string BuildDisplayOutput(Display display)
+        private static string BuildDisplayOutput(Display display)
         {
             var result = new StringBuilder();
             foreach (var line in display.BuildDisplay())

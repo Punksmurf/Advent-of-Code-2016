@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading;
 using AoC2016.Solutions.Day8.Instructions;
@@ -10,18 +11,20 @@ namespace AoC2016.Solutions.Day8
         private readonly int _width;
         private readonly int _height;
         private readonly bool[,] pixels;
+        private readonly bool _attemptDisplay;
 
-        public Display(int width, int height)
+        public Display(int width, int height, bool attemptDisplay = false)
         {
             _width = width;
             _height = height;
             pixels = new bool[width,height];
+            _attemptDisplay = attemptDisplay;
         }
 
         public void Accept(Instruction visitor)
         {
             visitor.Visit(this);
-            Show();
+            if (_attemptDisplay) Show(false);
         }
 
         public void Rect(int width, int height)
@@ -87,7 +90,12 @@ namespace AoC2016.Solutions.Day8
             return count;
         }
 
-        private void Show()
+        public void Show()
+        {
+            Show(true);
+        }
+
+        private void Show(bool last)
         {
             var cW = Console.BufferWidth;
             var cH = Console.BufferHeight;
@@ -96,20 +104,26 @@ namespace AoC2016.Solutions.Day8
 
             var display = BuildDisplay();
 
-            Console.Clear();
-            Console.SetCursorPosition(0, 0);
-            Console.Write(new StringBuilder(_width + 2).Append('•', _width + 2));
+
+            for (var i = 0; i < _height + 3; i++)
+            {
+                Console.WriteLine();
+            }
+
+            var top = Console.CursorTop - _height - 3;
+            Console.SetCursorPosition(0, top);
+
+            Console.WriteLine(new StringBuilder(_width + 2).Append('•', _width + 2));
             for (var y = 0; y < _height; y++)
             {
-                Console.SetCursorPosition(0, y + 1);
                 Console.Write('•');
                 Console.Write(display[y]);
-                Console.Write('•');
+                Console.WriteLine('•');
             }
-            Console.SetCursorPosition(0, _height + 1);
-            Console.Write(new StringBuilder(_width + 2).Append('•', _width + 2));
-
-            Thread.Sleep(500);
+            Console.WriteLine(new StringBuilder(_width + 2).Append('•', _width + 2));
+            Console.WriteLine($"Pixels lit: {CountLitPixels()}");
+            if (!last) Console.SetCursorPosition(0, top);
+            Thread.Sleep(100);
         }
 
         public string[] BuildDisplay()
