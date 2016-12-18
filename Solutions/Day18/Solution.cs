@@ -86,27 +86,8 @@ namespace AoC2016.Solutions.Day18
                 for (var i = 0; i < state.Length; i++)
                 {
                     var sl = i > 0 && state[i - 1];
-                    var sm = state[i];
                     var sr = i < state.Length - 1 && state[i + 1];
-
-                    var ns = false;
-                    if (sl && sm && !sr)
-                    {
-                        ns = true;
-                    }
-                    else if (!sl && sm && sr)
-                    {
-                        ns = true;
-                    }
-                    else if (sl && !sm && !sr)
-                    {
-                        ns = true;
-                    }
-                    else if (!sl && !sm && sr)
-                    {
-                        ns = true;
-                    }
-                    newState[i] = ns;
+                    newState[i] = sl != sr;
                 }
                 state = newState;
                 yield return state;
