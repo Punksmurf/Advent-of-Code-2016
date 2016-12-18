@@ -20,7 +20,7 @@ namespace AoC2016.Solutions.Day18
                 {
                     traps += state.Count(_ => _);
                     safe += state.Count(_ => !_);
-                    Console.WriteLine(CreateStateString(state));
+//                    Console.WriteLine(CreateStateString(state));
                 }
                 return $"There are {traps} traps in the room and {safe} safe tiles.";
             });
@@ -37,7 +37,7 @@ namespace AoC2016.Solutions.Day18
                 {
                     traps += state.Count(_ => _);
                     safe += state.Count(_ => !_);
-                    Console.WriteLine(CreateStateString(state));
+//                    Console.WriteLine(CreateStateString(state));
                 }
                 return $"There are {traps} traps in the room and {safe} safe tiles.";
             });
@@ -54,13 +54,13 @@ namespace AoC2016.Solutions.Day18
                 {
                     traps += state.Count(_ => _);
                     safe += state.Count(_ => !_);
-                    Console.WriteLine(CreateStateString(state));
+//                    Console.WriteLine(CreateStateString(state));
                 }
                 return $"There are {traps} traps in the room and {safe} safe tiles.";
             });
         }
 
-        private string CreateStateString(bool[] state)
+        private static string CreateStateString(bool[] state)
         {
             return string.Concat(state.Select(_ => _ ? '^' : '.'));
         }
@@ -72,6 +72,9 @@ namespace AoC2016.Solutions.Day18
                 Its center and right tiles are traps, but its left tile is not.
                 Only its left tile is a trap.
                 Only its right tile is a trap.
+
+                111 110 101 100 011 010 001 000
+                 0   1   0   1   1   0   1   0  = Rule 90
             */
 
             // begin with the current state
