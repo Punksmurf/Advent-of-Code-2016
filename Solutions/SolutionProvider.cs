@@ -26,6 +26,7 @@
                 case 18: return new Day18.Solution();
                 case 19: return new Day19.Solution();
                 case 20: return new Day20.Solution();
+                case 21: return new Day21.Solution();
                 default:
                     throw new System.NotImplementedException();
             }
